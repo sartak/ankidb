@@ -18,4 +18,4 @@ mod database;
 mod model;
 
 pub use database::Database;
-pub use model::{DeckId, NotetypeId};
+pub use model::{CardId, DeckId, NoteId, NotetypeId, RevlogId};

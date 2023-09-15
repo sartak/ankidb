@@ -1,5 +1,9 @@
 # Changelog
 
+## [NEXT]
+
+- export more id wrappers from ankidb
+
 ## [0.1.1] - 2023-09-15
 
 - add id_for_deck, id_for_notetype, and fields_for_notetype to Database
