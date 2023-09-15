@@ -1,4 +1,4 @@
-use rusqlite::{Connection, Result};
+use rusqlite::{params, Connection, Result};
 use std::path::Path;
 use unicase::UniCase;
 
@@ -46,5 +46,69 @@ impl Database {
         db.create_collation("unicase", |s1, s2| UniCase::new(s1).cmp(&UniCase::new(s2)))?;
 
         Ok(Self { connection: db })
+    }
+
+    /// Gets the id of a deck by its name.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let id = db.id_for_deck("General")?;
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if the provided name does not match a deck, or if the
+    /// database becomes unavailable.
+    pub fn id_for_deck(&self, name: &str) -> Result<i64> {
+        let mut stmt = self
+            .connection
+            .prepare("SELECT id FROM decks WHERE name=?")?;
+        stmt.query_row(params![name], |row| row.get(0))
+    }
+
+    /// Gets the id of a notetype by its name.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let id = db.id_for_notetype("Basic")?;
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if the provided name does not match a notetype, or if the
+    /// database becomes unavailable.
+    pub fn id_for_notetype(&self, name: &str) -> Result<i64> {
+        let mut stmt = self
+            .connection
+            .prepare("SELECT id FROM notetypes WHERE name=?")?;
+        stmt.query_row(params![name], |row| row.get(0))
+    }
+
+    /// Gets the names of each field for the given notetype id.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let id = db.id_for_notetype("Basic")?;
+    /// let fields = db.fields_for_notetype(id)?;
+    /// assert_eq!(fields[0], "Front");
+    /// assert_eq!(fields[1], "Back");
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if the provided id does not match a notetype, or if the
+    /// database becomes unavailable.
+    pub fn fields_for_notetype(&self, id: i64) -> Result<Vec<String>> {
+        let mut stmt = self
+            .connection
+            .prepare("SELECT name FROM fields WHERE ntid=? ORDER BY ord ASC")?;
+        let res = stmt.query_map(params![id], |row| row.get(0))?;
+        res.collect()
     }
 }
