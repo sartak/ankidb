@@ -1,14 +1,16 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+//! `ankidb` gives you an opinionated API to Anki's database.
+//!
+//! ```rust,no_run
+//! use ankidb::Database;
+//!
+//! let db = Database::open(&"/path/to/collection.anki2")?;
+//! # Ok::<(), rusqlite::Error>(())
+//! ```
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#![warn(clippy::cargo)]
+#![warn(clippy::pedantic)]
+#![warn(clippy::nursery)]
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+mod database;
+
+pub use database::Database;
