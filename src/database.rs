@@ -49,6 +49,42 @@ impl Database {
         Ok(Self { connection: db })
     }
 
+    /// Prepares a SQL-string statement to run against the db.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let mut stmt = db.prepare_raw("SELECT COUNT(*) FROM revlog")?;
+    /// let res: i64 = stmt.query_row([], |row| row.get(0))?;
+    /// assert!(res > 100);
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if there's a syntax error, or if the database becomes unavailable.
+    pub fn prepare_raw(&self, sql: &str) -> Result<rusqlite::Statement<'_>> {
+        self.connection.prepare(sql)
+    }
+
+    /// Prepares a cached SQL-string statement to run against the db.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let mut stmt = db.prepare_cached_raw("SELECT COUNT(*) FROM revlog")?;
+    /// let res: i64 = stmt.query_row([], |row| row.get(0))?;
+    /// assert!(res > 100);
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if there's a syntax error, or if the database becomes unavailable.
+    pub fn prepare_cached_raw(&self, sql: &str) -> Result<rusqlite::CachedStatement<'_>> {
+        self.connection.prepare_cached(sql)
+    }
+
     /// Gets the id of a deck by its name.
     ///
     /// ```rust,no_run
@@ -63,9 +99,7 @@ impl Database {
     /// This can fail if the provided name does not match a deck, or if the
     /// database becomes unavailable.
     pub fn id_for_deck(&self, name: &str) -> Result<DeckId> {
-        let mut stmt = self
-            .connection
-            .prepare("SELECT id FROM decks WHERE name=?")?;
+        let mut stmt = self.prepare_raw("SELECT id FROM decks WHERE name=?")?;
         stmt.query_row(params![name], |row| row.get(0))
     }
 
@@ -83,9 +117,7 @@ impl Database {
     /// This can fail if the provided name does not match a notetype, or if the
     /// database becomes unavailable.
     pub fn id_for_notetype(&self, name: &str) -> Result<NotetypeId> {
-        let mut stmt = self
-            .connection
-            .prepare("SELECT id FROM notetypes WHERE name=?")?;
+        let mut stmt = self.prepare_raw("SELECT id FROM notetypes WHERE name=?")?;
         stmt.query_row(params![name], |row| row.get(0))
     }
 
@@ -106,9 +138,7 @@ impl Database {
     /// This can fail if the provided id does not match a notetype, or if the
     /// database becomes unavailable.
     pub fn fields_for_notetype(&self, id: NotetypeId) -> Result<Vec<String>> {
-        let mut stmt = self
-            .connection
-            .prepare("SELECT name FROM fields WHERE ntid=? ORDER BY ord ASC")?;
+        let mut stmt = self.prepare_raw("SELECT name FROM fields WHERE ntid=? ORDER BY ord ASC")?;
         let res = stmt.query_map(params![id], |row| row.get(0))?;
         res.collect()
     }
