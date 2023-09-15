@@ -1,6 +1,16 @@
 [package]
 name = "ankidb"
 version = "0.1.0"
+authors = ["Shawn M Moore <code@shawn.dev>"]
 edition = "2021"
+rust-version = "1.65"
+
+description = "Opinionated library for interacting with Anki database"
+repository = "https://github.com/sartak/ankidb"
+readme = "README.md"
+keywords = ["anki", "srs", "sqlite", "database", "study"]
+categories = ["api-bindings", "database"]
+license = "MIT"
+include = ["src/**/*", "LICENSE", "README.md", "CHANGELOG.md"]
 
 [dependencies]
