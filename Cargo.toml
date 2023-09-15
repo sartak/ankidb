@@ -5,7 +5,7 @@ authors = ["Shawn M Moore <code@shawn.dev>"]
 edition = "2021"
 rust-version = "1.65"
 
-description = "Opinionated library for interacting with Anki database"
+description = "Opinionated library for interacting with Anki's database"
 repository = "https://github.com/sartak/ankidb"
 readme = "README.md"
 keywords = ["anki", "srs", "sqlite", "database", "study"]
