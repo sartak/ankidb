@@ -7,7 +7,7 @@ pub struct Database {
 }
 
 impl Database {
-    /// Opens a connection to the Anki database.
+    /// Opens a connection to an Anki database.
     ///
     /// ```rust,no_run
     /// use ankidb::Database;
