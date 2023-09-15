@@ -12,5 +12,7 @@
 #![warn(clippy::nursery)]
 
 mod database;
+mod model;
 
 pub use database::Database;
+pub use model::{DeckId, NotetypeId};

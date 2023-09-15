@@ -1,3 +1,4 @@
+use crate::model::{DeckId, NotetypeId};
 use rusqlite::{params, Connection, Result};
 use std::path::Path;
 use unicase::UniCase;
@@ -61,7 +62,7 @@ impl Database {
     ///
     /// This can fail if the provided name does not match a deck, or if the
     /// database becomes unavailable.
-    pub fn id_for_deck(&self, name: &str) -> Result<i64> {
+    pub fn id_for_deck(&self, name: &str) -> Result<DeckId> {
         let mut stmt = self
             .connection
             .prepare("SELECT id FROM decks WHERE name=?")?;
@@ -81,7 +82,7 @@ impl Database {
     ///
     /// This can fail if the provided name does not match a notetype, or if the
     /// database becomes unavailable.
-    pub fn id_for_notetype(&self, name: &str) -> Result<i64> {
+    pub fn id_for_notetype(&self, name: &str) -> Result<NotetypeId> {
         let mut stmt = self
             .connection
             .prepare("SELECT id FROM notetypes WHERE name=?")?;
@@ -104,7 +105,7 @@ impl Database {
     ///
     /// This can fail if the provided id does not match a notetype, or if the
     /// database becomes unavailable.
-    pub fn fields_for_notetype(&self, id: i64) -> Result<Vec<String>> {
+    pub fn fields_for_notetype(&self, id: NotetypeId) -> Result<Vec<String>> {
         let mut stmt = self
             .connection
             .prepare("SELECT name FROM fields WHERE ntid=? ORDER BY ord ASC")?;
