@@ -30,6 +30,18 @@ macro_rules! id_wrapper {
             }
         }
 
+        impl From<$t> for sea_query::Value {
+            fn from(id: $t) -> Self {
+                id.0.into()
+            }
+        }
+
+        impl From<&$t> for sea_query::Value {
+            fn from(id: &$t) -> Self {
+                id.0.into()
+            }
+        }
+
         impl std::fmt::Display for $t {
             fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "{}", self.0)
