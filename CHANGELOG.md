@@ -3,8 +3,7 @@
 ## [NEXT]
 
 - _breaking_: add sea-query and sea-query-rusqlite dependencies
-
-- export more id wrappers from ankidb
+- _breaking_: stop re-exporting id structs and instead expose ankidb::model::\*
 
 ## [0.1.1] - 2023-09-15
 

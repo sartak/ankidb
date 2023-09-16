@@ -17,7 +17,6 @@
 #![allow(clippy::multiple_crate_versions)]
 
 mod database;
-mod model;
+pub mod model;
 
 pub use database::Database;
-pub use model::{CardId, DeckId, NoteId, NotetypeId, RevlogId};
