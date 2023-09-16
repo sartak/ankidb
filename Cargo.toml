@@ -18,3 +18,6 @@ include = ["src/**/*", "LICENSE", "README.md", "CHANGELOG.md"]
 # https://github.com/ankitects/anki/blob/30ae9f7c5408420c8f347073a9e5e62756a6d7cb/Cargo.toml#L29
 rusqlite = { version = "0.29.0", features = ["trace", "functions", "collation", "bundled"] }
 unicase = "=2.6.0"
+
+sea-query = { version = "0.30.1", default-features = false, features = ["backend-sqlite", "derive"] }
+sea-query-rusqlite = "0.4.0"

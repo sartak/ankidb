@@ -2,6 +2,8 @@
 
 ## [NEXT]
 
+- _breaking_: add sea-query and sea-query-rusqlite dependencies
+
 - export more id wrappers from ankidb
 
 ## [0.1.1] - 2023-09-15
