@@ -1,5 +1,7 @@
 use crate::model::{DeckId, NotetypeId};
 use rusqlite::{params, Connection, Result};
+use sea_query::SqliteQueryBuilder;
+use sea_query_rusqlite::{RusqliteBinder, RusqliteValues};
 use std::path::Path;
 use unicase::UniCase;
 
@@ -47,6 +49,62 @@ impl Database {
         db.create_collation("unicase", |s1, s2| UniCase::new(s1).cmp(&UniCase::new(s2)))?;
 
         Ok(Self { connection: db })
+    }
+
+    /// Prepares a seaquery statement to run against the db.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// use sea_query::*;
+    /// use ankidb::table::Revlog;
+    /// # let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let (mut stmt, bind) = db.prepare(
+    ///     Query::select()
+    ///         .expr(Func::count(Expr::col(Asterisk)))
+    ///         .from(Revlog::Table)
+    /// )?;
+    /// let res: i64 = stmt.query_row(&*bind.as_params(), |row| row.get(0))?;
+    /// assert!(res > 100);
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if there's a syntax error, or if the database becomes unavailable.
+    pub fn prepare<T: RusqliteBinder>(
+        &self,
+        query: &T,
+    ) -> Result<(rusqlite::Statement<'_>, RusqliteValues)> {
+        let (sql, values) = query.build_rusqlite(SqliteQueryBuilder);
+        self.connection.prepare(&sql).map(|s| (s, values))
+    }
+
+    /// Prepares a seaquery statement to run against the db.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// use sea_query::*;
+    /// use ankidb::table::Revlog;
+    /// # let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let (mut stmt, bind) = db.prepare_cached(
+    ///     Query::select()
+    ///         .expr(Func::count(Expr::col(Asterisk)))
+    ///         .from(Revlog::Table)
+    /// )?;
+    /// let res: i64 = stmt.query_row(&*bind.as_params(), |row| row.get(0))?;
+    /// assert!(res > 100);
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if there's a syntax error, or if the database becomes unavailable.
+    pub fn prepare_cached<T: RusqliteBinder>(
+        &self,
+        query: &T,
+    ) -> Result<(rusqlite::CachedStatement<'_>, RusqliteValues)> {
+        let (sql, values) = query.build_rusqlite(SqliteQueryBuilder);
+        self.connection.prepare_cached(&sql).map(|s| (s, values))
     }
 
     /// Prepares a SQL-string statement to run against the db.

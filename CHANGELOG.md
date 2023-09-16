@@ -6,6 +6,7 @@
 - _breaking_: stop re-exporting id structs and instead expose ankidb::model::\*
 
 - add anki schema definitions for use in sea-query builders
+- add prepare and prepare_cached to Database
 
 ## [0.1.1] - 2023-09-15
 
