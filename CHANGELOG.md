@@ -5,6 +5,8 @@
 - _breaking_: add sea-query and sea-query-rusqlite dependencies
 - _breaking_: stop re-exporting id structs and instead expose ankidb::model::\*
 
+- add anki schema definitions for use in sea-query builders
+
 ## [0.1.1] - 2023-09-15
 
 - add id_for_deck, id_for_notetype, and fields_for_notetype to Database

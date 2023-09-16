@@ -18,5 +18,6 @@
 
 mod database;
 pub mod model;
+pub mod table;
 
 pub use database::Database;
