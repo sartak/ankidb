@@ -7,6 +7,7 @@
 
 - add anki schema definitions for use in sea-query builders
 - add prepare and prepare_cached to Database
+- add query library
 
 ## [0.1.1] - 2023-09-15
 

@@ -24,6 +24,7 @@
 
 mod database;
 pub mod model;
+pub mod query;
 pub mod table;
 
 pub use database::Database;
