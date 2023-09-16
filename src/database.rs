@@ -76,7 +76,7 @@ impl Database {
         query: &T,
     ) -> Result<(rusqlite::Statement<'_>, RusqliteValues)> {
         let (sql, values) = query.build_rusqlite(SqliteQueryBuilder);
-        self.connection.prepare(&sql).map(|s| (s, values))
+        self.prepare_raw(&sql).map(|s| (s, values))
     }
 
     /// Prepares a seaquery statement to run against the db.
@@ -104,7 +104,7 @@ impl Database {
         query: &T,
     ) -> Result<(rusqlite::CachedStatement<'_>, RusqliteValues)> {
         let (sql, values) = query.build_rusqlite(SqliteQueryBuilder);
-        self.connection.prepare_cached(&sql).map(|s| (s, values))
+        self.prepare_cached_raw(&sql).map(|s| (s, values))
     }
 
     /// Prepares a SQL-string statement to run against the db.
