@@ -90,6 +90,7 @@ pub trait AnkiExt {
     fn where_cards_queue(self, queues: &[i64]) -> Self;
     fn where_templates_name(self, name: &str) -> Self;
     fn where_suspended(self, suspended: bool) -> Self;
+    fn where_fields_like(self, pattern: &str) -> Self;
     fn where_fields_match(self, fields: &[FieldMatcher]) -> Self;
 
     fn not_did_mid(self, did: DeckId, mid: NotetypeId) -> Self;
@@ -167,6 +168,10 @@ impl AnkiExt for &mut SelectStatement {
         )
     }
 
+    fn where_fields_like(self, pattern: &str) -> Self {
+        self.and_where(Expr::col((Notes::Table, Notes::Flds)).like(pattern))
+    }
+
     /// NOTE: The provided `fields` list must have the same length as the note's fields
     /// definition; otherwise, will give inconsistent results.
     fn where_fields_match(self, fields: &[FieldMatcher]) -> Self {
@@ -182,7 +187,7 @@ impl AnkiExt for &mut SelectStatement {
             .collect::<Vec<_>>()
             .join("\x1F");
 
-        self.and_where(Expr::col((Notes::Table, Notes::Flds)).like(spec))
+        self.where_fields_like(&spec)
     }
 
     fn not_did_mid(self, did: DeckId, mid: NotetypeId) -> Self {

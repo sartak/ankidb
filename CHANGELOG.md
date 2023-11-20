@@ -2,7 +2,7 @@
 
 ## NEXT
 
-- add `where_fields_match` query method
+- add `where_fields_like` and `where_fields_match` query methods
 
 ## [0.2.1] - 2023-11-20
 
