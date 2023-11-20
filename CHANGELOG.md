@@ -4,6 +4,7 @@
 
 - implement `sea_query::Nullable` for id types
 - add optional `serde` feature
+- add optional `postgres-types` feature
 
 ## [0.2.0] - 2023-09-16
 

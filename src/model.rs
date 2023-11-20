@@ -58,25 +58,45 @@ macro_rules! id_wrapper {
 
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "postgres-types",
+    derive(postgres_types::FromSql, postgres_types::ToSql)
+)]
 pub struct DeckId(i64);
 id_wrapper!(DeckId);
 
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "postgres-types",
+    derive(postgres_types::FromSql, postgres_types::ToSql)
+)]
 pub struct NotetypeId(i64);
 id_wrapper!(NotetypeId);
 
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "postgres-types",
+    derive(postgres_types::FromSql, postgres_types::ToSql)
+)]
 pub struct NoteId(i64);
 id_wrapper!(NoteId);
 
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "postgres-types",
+    derive(postgres_types::FromSql, postgres_types::ToSql)
+)]
 pub struct CardId(i64);
 id_wrapper!(CardId);
 
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "postgres-types",
+    derive(postgres_types::FromSql, postgres_types::ToSql)
+)]
 pub struct RevlogId(i64);
 id_wrapper!(RevlogId);
