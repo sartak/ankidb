@@ -42,6 +42,12 @@ macro_rules! id_wrapper {
             }
         }
 
+        impl sea_query::Nullable for $t {
+            fn null() -> sea_query::Value {
+                sea_query::Value::Int(None)
+            }
+        }
+
         impl std::fmt::Display for $t {
             fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "{}", self.0)

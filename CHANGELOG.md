@@ -1,5 +1,9 @@
 # Changelog
 
+## NEXT
+
+- implement `sea_query::Nullable` for id types
+
 ## [0.2.0] - 2023-09-16
 
 - _breaking_: add `sea-query` and `sea-query-rusqlite` dependencies
