@@ -1,6 +1,6 @@
 # Changelog
 
-## NEXT
+## [0.2.1] - 2023-11-20
 
 - implement `sea_query::Nullable` for id types
 - add optional `serde` feature
