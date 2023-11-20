@@ -21,3 +21,4 @@ unicase = "=2.6.0"
 
 sea-query = { version = "0.30.1", default-features = false, features = ["backend-sqlite", "derive"] }
 sea-query-rusqlite = "0.4.0"
+serde = { version = "1.0.192", optional = true }
