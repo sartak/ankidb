@@ -5,6 +5,14 @@
 use crate::{model::*, table::*};
 use sea_query::*;
 
+pub enum FieldMatcher {
+    Any,
+    Equals(String),
+    Prefix(String),
+    Suffix(String),
+    Contains(String),
+}
+
 #[must_use]
 pub fn col() -> SelectStatement {
     Query::select().from(Col::Table).take()
@@ -82,6 +90,7 @@ pub trait AnkiExt {
     fn where_cards_queue(self, queues: &[i64]) -> Self;
     fn where_templates_name(self, name: &str) -> Self;
     fn where_suspended(self, suspended: bool) -> Self;
+    fn where_fields_match(self, fields: &[FieldMatcher]) -> Self;
 
     fn not_did_mid(self, did: DeckId, mid: NotetypeId) -> Self;
 
@@ -156,6 +165,24 @@ impl AnkiExt for &mut SelectStatement {
                 q.and_where(Expr::col((Cards::Table, Cards::Queue)).gte(0));
             },
         )
+    }
+
+    /// NOTE: The provided `fields` list must have the same length as the note's fields
+    /// definition; otherwise, will give inconsistent results.
+    fn where_fields_match(self, fields: &[FieldMatcher]) -> Self {
+        let spec = fields
+            .into_iter()
+            .map(|f| match f {
+                FieldMatcher::Any => String::from("%"),
+                FieldMatcher::Equals(s) => s.clone(),
+                FieldMatcher::Prefix(s) => format!("{s}%"),
+                FieldMatcher::Suffix(s) => format!("%{s}"),
+                FieldMatcher::Contains(s) => format!("%{s}%"),
+            })
+            .collect::<Vec<_>>()
+            .join("\x1F");
+
+        self.and_where(Expr::col((Notes::Table, Notes::Flds)).like(spec))
     }
 
     fn not_did_mid(self, did: DeckId, mid: NotetypeId) -> Self {

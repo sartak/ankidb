@@ -1,5 +1,9 @@
 # Changelog
 
+## NEXT
+
+- add `where_fields_match` query method
+
 ## [0.2.1] - 2023-11-20
 
 - implement `sea_query::Nullable` for id types
