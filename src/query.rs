@@ -176,7 +176,7 @@ impl AnkiExt for &mut SelectStatement {
     /// definition; otherwise, will give inconsistent results.
     fn where_fields_match(self, fields: &[FieldMatcher]) -> Self {
         let spec = fields
-            .into_iter()
+            .iter()
             .map(|f| match f {
                 FieldMatcher::Any => String::from("%"),
                 FieldMatcher::Equals(s) => s.clone(),
