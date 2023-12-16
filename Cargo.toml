@@ -19,7 +19,7 @@ include = ["src/**/*", "LICENSE", "README.md", "CHANGELOG.md"]
 rusqlite = { version = "0.29.0", features = ["trace", "functions", "collation", "bundled"] }
 unicase = "=2.6.0"
 
-postgres-types = { version = "0.2.5", features = ["derive"], optional = true }
-sea-query = { version = "0.30.1", default-features = false, features = ["backend-sqlite", "derive"] }
+postgres-types = { version = "0.2.6", features = ["derive"], optional = true }
+sea-query = { version = "0.30.5", default-features = false, features = ["backend-sqlite", "derive"] }
 sea-query-rusqlite = "0.4.0"
-serde = { version = "1.0.192", optional = true }
+serde = { version = "1.0.193", optional = true }
