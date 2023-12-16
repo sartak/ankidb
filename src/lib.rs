@@ -13,8 +13,6 @@
 #![warn(clippy::cargo)]
 #![warn(clippy::pedantic)]
 #![warn(clippy::nursery)]
-// https://github.com/SeaQL/sea-query/issues/706
-#![allow(clippy::multiple_crate_versions)]
 
 mod database;
 pub mod model;
