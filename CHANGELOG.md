@@ -3,6 +3,7 @@
 ## [0.3.0] - 2023-12-16
 
 - _breaking_: update `sea-query`, `postgres-types`, and `serde` dependencies
+
 - add `where_fields_like` and `where_fields_match` query methods
 
 ## [0.2.1] - 2023-11-20
