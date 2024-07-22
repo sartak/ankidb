@@ -1,6 +1,6 @@
 # Changelog
 
-## NEXT
+## [0.4.0] - 2024-07-22
 
 - _breaking_: update `sea-query`, `postgres-types`, and `serde` dependencies
 
