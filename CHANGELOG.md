@@ -1,5 +1,9 @@
 # Changelog
 
+## NEXT
+
+- add `notetypes` method
+
 ## [0.3.0] - 2023-12-16
 
 - _breaking_: update `sea-query`, `postgres-types`, and `serde` dependencies

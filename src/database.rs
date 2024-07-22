@@ -179,6 +179,26 @@ impl Database {
         stmt.query_row(params![name], |row| row.get(0))
     }
 
+    /// Gets the ID and name of each notetype in the database.
+    ///
+    /// ```rust,no_run
+    /// # use ankidb::Database;
+    /// let db = Database::open(&"/path/to/collection.anki2")?;
+    /// let notetypes = db.notetypes()?;
+    /// assert_eq!(notetypes[0], (123, "Basic"));
+    /// assert_eq!(notetypes[1], (456, "Vocabulary"));
+    /// # Ok::<(), rusqlite::Error>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// This can fail if the database becomes unavailable.
+    pub fn notetypes(&self) -> Result<Vec<(NotetypeId, String)>> {
+        let mut stmt = self.prepare_raw("SELECT id, name FROM notetypes ORDER BY id ASC")?;
+        let res = stmt.query_map([], |row| Ok((row.get(0)?, row.get(1)?)))?;
+        res.collect()
+    }
+
     /// Gets the names of each field for the given notetype id.
     ///
     /// ```rust,no_run
