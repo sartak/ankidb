@@ -1,5 +1,9 @@
 # Changelog
 
+## NEXT
+
+- add `where_nid` and `where_cid` query methods
+
 ## [0.4.0] - 2024-07-22
 
 - _breaking_: update `sea-query`, `postgres-types`, and `serde` dependencies

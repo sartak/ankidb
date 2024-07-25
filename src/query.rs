@@ -83,8 +83,10 @@ pub trait AnkiExt {
     fn get_tags(self) -> Self;
     fn get_queue(self) -> Self;
 
+    fn where_nid(self, nid: NoteId) -> Self;
     fn where_mid(self, mid: NotetypeId) -> Self;
     fn where_mids(self, mids: &[NotetypeId]) -> Self;
+    fn where_cid(self, cid: CardId) -> Self;
     fn where_cards_ord(self, ord: i64) -> Self;
     fn where_cards_type(self, r#type: i64) -> Self;
     fn where_cards_queue(self, queues: &[i64]) -> Self;
@@ -132,12 +134,20 @@ impl AnkiExt for &mut SelectStatement {
         self.column((Cards::Table, Cards::Queue))
     }
 
+    fn where_nid(self, nid: NoteId) -> Self {
+        self.and_where(Expr::col((Notes::Table, Notes::Id)).eq(nid))
+    }
+
     fn where_mid(self, mid: NotetypeId) -> Self {
         self.and_where(Expr::col((Notes::Table, Notes::Mid)).eq(mid))
     }
 
     fn where_mids(self, mids: &[NotetypeId]) -> Self {
         self.and_where(Expr::col((Notes::Table, Notes::Mid)).is_in(mids))
+    }
+
+    fn where_cid(self, cid: CardId) -> Self {
+        self.and_where(Expr::col((Cards::Table, Cards::Id)).eq(cid))
     }
 
     fn where_cards_ord(self, ord: i64) -> Self {
