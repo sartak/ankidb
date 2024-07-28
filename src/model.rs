@@ -100,3 +100,13 @@ id_wrapper!(CardId);
 )]
 pub struct RevlogId(i64);
 id_wrapper!(RevlogId);
+
+#[must_use]
+pub fn parse_fields(fields: &str) -> impl Iterator<Item = &str> {
+    fields.split('\x1F')
+}
+
+#[must_use]
+pub fn parse_tags(tags: &str) -> impl Iterator<Item = &str> {
+    tags.split(' ').filter(|s| !s.is_empty())
+}

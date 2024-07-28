@@ -20,3 +20,4 @@ pub mod query;
 pub mod table;
 
 pub use database::Database;
+pub use model::{parse_fields, parse_tags};

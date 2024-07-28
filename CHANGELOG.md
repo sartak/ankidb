@@ -1,5 +1,9 @@
 # Changelog
 
+## NEXT
+
+- add `parse_fields` and `parse_tags` functions
+
 ## [0.4.1] - 2024-07-25
 
 - add `where_nid` and `where_cid` query methods
