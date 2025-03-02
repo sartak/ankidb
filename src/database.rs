@@ -185,8 +185,8 @@ impl Database {
     /// # use ankidb::Database;
     /// let db = Database::open(&"/path/to/collection.anki2")?;
     /// let notetypes = db.notetypes()?;
-    /// assert_eq!(notetypes[0], (123, "Basic"));
-    /// assert_eq!(notetypes[1], (456, "Vocabulary"));
+    /// assert_eq!(notetypes[0], (123.into(), String::from("Basic")));
+    /// assert_eq!(notetypes[1], (456.into(), String::from("Vocabulary")));
     /// # Ok::<(), rusqlite::Error>(())
     /// ```
     ///

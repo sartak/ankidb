@@ -3,6 +3,7 @@
 ## NEXT
 
 - add `parse_fields` and `parse_tags` functions
+- improve types for `notetypes` doctest
 
 ## [0.4.1] - 2024-07-25
 
