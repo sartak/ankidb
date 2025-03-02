@@ -2,8 +2,8 @@
 name = "ankidb"
 version = "0.4.1"
 authors = ["Shawn M Moore <code@shawn.dev>"]
-edition = "2021"
-rust-version = "1.65"
+edition = "2024"
+rust-version = "1.85"
 
 description = "Opinionated library for interacting with Anki's database"
 repository = "https://github.com/sartak/ankidb"

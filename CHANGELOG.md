@@ -2,6 +2,8 @@
 
 ## NEXT
 
+- _breaking_: upgrade to 2024 edition, which bumps MSRV to 1.85
+
 - add `parse_fields` and `parse_tags` functions
 - improve types for `notetypes` doctest
 
