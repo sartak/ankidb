@@ -1,6 +1,6 @@
 # Changelog
 
-## NEXT
+## [0.5.1] - 2025-03-08
 
 - add `where_tag` query method
 
