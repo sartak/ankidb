@@ -94,6 +94,7 @@ pub trait AnkiExt {
     fn where_suspended(self, suspended: bool) -> Self;
     fn where_fields_like(self, pattern: &str) -> Self;
     fn where_fields_match(self, fields: &[FieldMatcher]) -> Self;
+    fn where_tag(self, tag: &str) -> Self;
 
     fn not_did_mid(self, did: DeckId, mid: NotetypeId) -> Self;
 
@@ -198,6 +199,13 @@ impl AnkiExt for &mut SelectStatement {
             .join("\x1F");
 
         self.where_fields_like(&spec)
+    }
+
+    fn where_tag(self, tag: &str) -> Self {
+        assert!(!tag.contains(' '), "Tags may not contain whitespace");
+
+        let pattern = format!("% {tag} %");
+        self.and_where(Expr::col((Notes::Table, Notes::Tags)).like(pattern))
     }
 
     fn not_did_mid(self, did: DeckId, mid: NotetypeId) -> Self {
